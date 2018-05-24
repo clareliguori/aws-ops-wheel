@@ -1,0 +1,32 @@
+// pytest runner for Cloud9
+{
+  "script": [
+    "if [ \"$debug\" == true ]; then ",
+    "    python3.6 -m ikp3db -ik_p=15471 -ik_cwd=$project_path /usr/local/lib/python3.6/site-packages/pytest.py --verbose $file $args",
+    "else",
+    "   python3.6 -m pytest --verbose $file $args",
+    "fi",
+    "checkExitCode() {",
+    "    if [ $1 ] && [ \"$debug\" == true ]; then ",
+    "        python3.6 -m ikp3db 2>&1 | grep -q 'No module' && echo '",
+    "    To use python debugger install ikpdb by running: ",
+    "        sudo yum update;",
+    "        sudo yum install python36-devel;",
+    "        sudo pip-3.6 install ikp3db;",
+    "        '",
+    "    fi",
+    "   return $1",
+    "}",
+    "checkExitCode $?"
+  ],
+  "python_version": "python3",
+  "working_dir": "$project_path",
+  "debugport": 15471,
+  "$debugDefaultState": false,
+  "debugger": "ikpdb",
+  "selector": "^.*\\.(py)$",
+  "env": {
+    "PYTHONPATH": "$python_path"
+  },
+  "trackId": "Python3"
+}
